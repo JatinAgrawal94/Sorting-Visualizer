@@ -34,8 +34,7 @@ const enableAll=()=>{
 
 disableAll();
 stopButton.addEventListener('click',()=>{
-    
-    alert("Function Stopped");
+    document.location.reload();
 });
 
 newarray.addEventListener('click',()=>{
@@ -61,7 +60,6 @@ insertionSort.addEventListener('click',()=>{
     disableAll();
     insertionSortAlgorithm(array);
 })
-
 
 quickSort.addEventListener('click',()=>{
     disableAll();
