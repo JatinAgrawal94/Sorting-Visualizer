@@ -8,6 +8,8 @@ const insertionSort=document.getElementsByClassName('insertion')[0];
 const quickSort=document.getElementsByClassName('quick')[0];
 const mergeSort=document.getElementsByClassName('merge')[0];
 const stopButton=document.getElementsByClassName('stop')[0];
+const noOfBars=document.getElementById('arr_sz');
+const speedOfBars=document.getElementById('arr_sp');
 
 const disableButton=(i)=>{
     for(let j=0;j<=4;j++){
@@ -32,13 +34,16 @@ const enableAll=()=>{
 
 disableAll();
 stopButton.addEventListener('click',()=>{
+    
     alert("Function Stopped");
 });
 
 newarray.addEventListener('click',()=>{
-    generateBars();
+    generateBars(noOfBars.value);
     addBars(array);
     newarray.disabled=true;
+    noOfBars.disabled=true;
+    speedOfBars.disabled=true;
     enableAll();
 });
 
@@ -73,9 +78,9 @@ const sortingFunction=(min,max)=>{
     return Math.floor(Math.random()*(max-min)+min);
 }
 
-const generateBars=()=>{
+const generateBars=(n)=>{
     var arr=[];
-    for(let i=0;i<20;i++){
+    for(let i=0;i<n;i++){
         arr.push(sortingFunction(0,100));
     }
     array=arr;
@@ -113,9 +118,6 @@ const swapBar=(a,b)=>{
     const style1 = window.getComputedStyle(el1[a]);
     const style2 = window.getComputedStyle(el1[b]);
 
-    // el1[a].style.backgroundColor="red";
-    // el1[b].style.backgroundColor="red";
-
     const transform1 = style1.getPropertyValue("height");
     const transform2 = style2.getPropertyValue("height");
     el1[a].style.height = transform2;
@@ -124,7 +126,6 @@ const swapBar=(a,b)=>{
     let h2=transform1.replace('px','');
     el1[a].textContent=h1;
     el1[b].textContent=h2;
-
 }
 
 const assignBar=(a,b)=>{
@@ -149,7 +150,7 @@ const bubblesortAlgorithm=async(arr)=>{
             if(arr[j]>arr[j+1]){
                 bar[j].style.backgroundColor="red";
                 bar[j+1].style.backgroundColor="red";
-                await new Promise(resolve=> setTimeout(()=>{resolve()},100));
+                await new Promise(resolve=> setTimeout(()=>{resolve()},speedOfBars.value));
                 swapBar(j,j+1);
                 bar[j].style.backgroundColor="lightgreen";
                 bar[j+1].style.backgroundColor="lightgreen";
@@ -157,6 +158,8 @@ const bubblesortAlgorithm=async(arr)=>{
         }
     }
     newarray.disabled=false;
+    noOfBars.disabled=false;
+    speedOfBars.disabled=false;
 }
 
 const selectionSortAlgorithm=async(arr)=>{
@@ -171,13 +174,15 @@ const selectionSortAlgorithm=async(arr)=>{
         
         bar[min_idx].style.backgroundColor="red";
         bar[j].style.backgroundColor="red";
-        await new Promise(resolve=> setTimeout(()=>{resolve()},100));
+        await new Promise(resolve=> setTimeout(()=>{resolve()},speedOfBars.value));
         swapBar(min_idx, i);
         bar[min_idx].style.backgroundColor="lightgreen";
         bar[j].style.backgroundColor="lightgreen";
         }
     }
     newarray.disabled=false;
+    noOfBars.disabled=false;
+    speedOfBars.disabled=false;
 }
 
 const insertionSortAlgorithm=async(arr)=>{
@@ -190,21 +195,23 @@ const insertionSortAlgorithm=async(arr)=>{
         { 
             bar[j+1].style.backgroundColor="red";
             bar[j].style.backgroundColor="red";
-            await new Promise(resolve=> setTimeout(()=>{resolve()},1000));
+            await new Promise(resolve=> setTimeout(()=>{resolve()},speedOfBars.value));
             arr[j + 1] = arr[j]; 
             assignBar(j+1,j);
-            await new Promise(resolve=> setTimeout(()=>{resolve()},1000));
+            await new Promise(resolve=> setTimeout(()=>{resolve()},speedOfBars.value));
             bar[j].style.backgroundColor="lightgreen";
             bar[j+1].style.backgroundColor="lightgreen";
             j = j - 1; 
         } 
-        await new Promise(resolve=> setTimeout(()=>{resolve()},1000));
+        await new Promise(resolve=> setTimeout(()=>{resolve()},speedOfBars.value));
         bar[j+1].style.backgroundColor="red";
         arr[j + 1] = key; 
         bar[j+1].style.backgroundColor="lightgreen";
         keyAssign(j+1,key);
     } 
     newarray.disabled=false;
+    noOfBars.disabled=false;
+    speedOfBars.disabled=false;
 }
 
 // features to be added
@@ -220,12 +227,14 @@ const quickSortAlgorithm=async(arr,low,high)=>{
         new Promise(resolve=>{
             setTimeout(()=>{
                 resolve();
-            },1000)
+            },speedOfBars.value)
         })
         await quickSortAlgorithm(arr, low, pi - 1);  // Before pi
         await quickSortAlgorithm(arr, pi + 1, high); // After pi
     }
     newarray.disabled=false;
+    noOfBars.disabled=false;
+    speedOfBars.disabled=false;
 }
 
 async function partition(arr,low,high){
@@ -252,7 +261,7 @@ async function partition(arr,low,high){
            await  new Promise(resolve=>{
                 setTimeout(()=>{
                     resolve();
-                },1000)
+                },speedOfBars.value)
                 
             });
             bar[i].style.backgroundColor="lightgreen";
@@ -265,8 +274,8 @@ async function partition(arr,low,high){
     // arr[high]=temp;
     bar[i+1].style.backgroundColor="red";
     bar[high].style.backgroundColor="red";
-    setTimeout(swapBar(i + 1,high),1000);
-    // new Promise(resolve=> setTimeout(()=>{resolve()},1000));
+    setTimeout(swapBar(i + 1,high),speedOfBars.value);
+    // new Promise(resolve=> setTimeout(()=>{resolve()},speedOfBars.value));
     bar[i+1].style.backgroundColor="lightgreen";
     bar[high].style.backgroundColor="lightgreen";
     return (i + 1)
@@ -290,7 +299,7 @@ async function merge(arr, l, m, r){
     await new Promise(resolve=>{
         setTimeout(()=>{
             resolve();
-        },100);
+        },speedOfBars.value);
     })
     for (var j = 0; j < n2; j++){
         R[j] = arr[m + 1 + j];
@@ -299,7 +308,7 @@ async function merge(arr, l, m, r){
     await new Promise(resolve=>{
         setTimeout(()=>{
             resolve();
-        },100);
+        },speedOfBars.value);
     })
     // Merge the temp arrays back into arr[l..r]
   
@@ -320,7 +329,7 @@ async function merge(arr, l, m, r){
             await new Promise(resolve=>{
                 setTimeout(()=>{
                     resolve();
-                },100);
+                },speedOfBars.value);
             })
             i++;
         }
@@ -331,7 +340,7 @@ async function merge(arr, l, m, r){
             await new Promise(resolve=>{
                 setTimeout(()=>{
                     resolve();
-                },100);
+                },speedOfBars.value);
             })
             j++;
         }
@@ -347,7 +356,7 @@ async function merge(arr, l, m, r){
         await new Promise(resolve=>{
             setTimeout(()=>{
                 resolve();
-            },100);
+            },speedOfBars.value);
         })
         i++;
         k++;
@@ -362,7 +371,7 @@ async function merge(arr, l, m, r){
         await new Promise(resolve=>{
             setTimeout(()=>{
                 resolve();
-            },100);
+            },speedOfBars.value);
         })
         j++;
         k++;
@@ -378,4 +387,6 @@ async function mergeSortAlgorithm(arr,l, r){
     await mergeSortAlgorithm(arr,m+1,r);
     await merge(arr,l,m,r);
     newarray.disabled=false;
+    noOfBars.disabled=false;
+    speedOfBars.disabled=false;
 }
