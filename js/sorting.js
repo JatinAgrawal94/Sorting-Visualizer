@@ -1,37 +1,73 @@
 const newarray=document.getElementById('newarray');
 const barAnimation=document.getElementById('bar-animation');
 var array=[];
+const sort=document.getElementsByClassName('sort');
 const bubbleSort=document.getElementsByClassName('bubble')[0];
 const selectionSort=document.getElementsByClassName('selection')[0];
 const insertionSort=document.getElementsByClassName('insertion')[0];
 const quickSort=document.getElementsByClassName('quick')[0];
 const mergeSort=document.getElementsByClassName('merge')[0];
+const stopButton=document.getElementsByClassName('stop')[0];
+
+const disableButton=(i)=>{
+    for(let j=0;j<=4;j++){
+        if(j==i){}
+        else{
+            sort[j].disabled=true;
+        }
+    }
+}
+
+const disableAll=()=>{
+    for(let j=0;j<=4;j++){
+        sort[j].disabled=true;
+    }
+}
+
+const enableAll=()=>{
+    for(let j=0;j<=4;j++){
+        sort[j].disabled=false;
+    }
+}
+
+disableAll();
+stopButton.addEventListener('click',()=>{
+    alert("Function Stopped");
+});
 
 newarray.addEventListener('click',()=>{
     generateBars();
     addBars(array);
+    newarray.disabled=true;
+    enableAll();
 });
 
 bubbleSort.addEventListener('click',()=>{
+    disableAll();
     bubblesortAlgorithm(array);
 })
 
 selectionSort.addEventListener('click',()=>{
+    disableAll();
     selectionSortAlgorithm(array);
 })
 
 insertionSort.addEventListener('click',()=>{
+    disableAll();
     insertionSortAlgorithm(array);
 })
 
 
 quickSort.addEventListener('click',()=>{
+    disableAll();
     quickSortAlgorithm(array,0,array.length-1);
 })
 
 mergeSort.addEventListener('click',()=>{
+    disableAll();
     mergeSortAlgorithm(array,0,array.length-1);
 })
+
 
 const sortingFunction=(min,max)=>{
     return Math.floor(Math.random()*(max-min)+min);
@@ -120,6 +156,7 @@ const bubblesortAlgorithm=async(arr)=>{
             }
         }
     }
+    newarray.disabled=false;
 }
 
 const selectionSortAlgorithm=async(arr)=>{
@@ -140,6 +177,7 @@ const selectionSortAlgorithm=async(arr)=>{
         bar[j].style.backgroundColor="lightgreen";
         }
     }
+    newarray.disabled=false;
 }
 
 const insertionSortAlgorithm=async(arr)=>{
@@ -166,6 +204,7 @@ const insertionSortAlgorithm=async(arr)=>{
         bar[j+1].style.backgroundColor="lightgreen";
         keyAssign(j+1,key);
     } 
+    newarray.disabled=false;
 }
 
 // features to be added
@@ -186,6 +225,7 @@ const quickSortAlgorithm=async(arr,low,high)=>{
         await quickSortAlgorithm(arr, low, pi - 1);  // Before pi
         await quickSortAlgorithm(arr, pi + 1, high); // After pi
     }
+    newarray.disabled=false;
 }
 
 async function partition(arr,low,high){
@@ -229,7 +269,6 @@ async function partition(arr,low,high){
     // new Promise(resolve=> setTimeout(()=>{resolve()},1000));
     bar[i+1].style.backgroundColor="lightgreen";
     bar[high].style.backgroundColor="lightgreen";
-    console.log(arr);
     return (i + 1)
 }
 
@@ -251,7 +290,7 @@ async function merge(arr, l, m, r){
     await new Promise(resolve=>{
         setTimeout(()=>{
             resolve();
-        },1000);
+        },100);
     })
     for (var j = 0; j < n2; j++){
         R[j] = arr[m + 1 + j];
@@ -260,7 +299,7 @@ async function merge(arr, l, m, r){
     await new Promise(resolve=>{
         setTimeout(()=>{
             resolve();
-        },1000);
+        },100);
     })
     // Merge the temp arrays back into arr[l..r]
   
@@ -281,7 +320,7 @@ async function merge(arr, l, m, r){
             await new Promise(resolve=>{
                 setTimeout(()=>{
                     resolve();
-                },1000);
+                },100);
             })
             i++;
         }
@@ -292,7 +331,7 @@ async function merge(arr, l, m, r){
             await new Promise(resolve=>{
                 setTimeout(()=>{
                     resolve();
-                },1000);
+                },100);
             })
             j++;
         }
@@ -308,7 +347,7 @@ async function merge(arr, l, m, r){
         await new Promise(resolve=>{
             setTimeout(()=>{
                 resolve();
-            },1000);
+            },100);
         })
         i++;
         k++;
@@ -323,7 +362,7 @@ async function merge(arr, l, m, r){
         await new Promise(resolve=>{
             setTimeout(()=>{
                 resolve();
-            },1000);
+            },100);
         })
         j++;
         k++;
@@ -338,4 +377,5 @@ async function mergeSortAlgorithm(arr,l, r){
     await mergeSortAlgorithm(arr,l,m);
     await mergeSortAlgorithm(arr,m+1,r);
     await merge(arr,l,m,r);
+    newarray.disabled=false;
 }
